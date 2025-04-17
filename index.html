@@ -12,7 +12,8 @@
   <script src="assets/js/tailiwnd.js"></script>
 </head>
 
-<body>
+<body
+  class="[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-400 [&::-webkit-scrollbar]:overflow-hidden [&::-webkit-scrollbar-thumb]:bg-black [&::-webkit-scrollbar-thumb]:rounded-full">
   <div class="header absolute top-0 w-full z-15">
     <div class="md:px-15 sm:px-8 px-5">
       <nav>
@@ -146,9 +147,9 @@
   <div class="our-brands">
     <div class="md:px-15 sm:px-8 px-5">
       <div
-        class="flex sm:flex-row flex-col-reverse items-end justify-between relative z-10 md:-mt-15 sm:-mt-10 -mt-5 pe-0 md:pe-12 sm:pe-10 sm:gap-10 gap-5">
+        class="flex lg:flex-row flex-col-reverse items-end justify-between relative z-10 md:-mt-12 sm:-mt-10 -mt-5 pe-0 md:pe-12 sm:pe-10 sm:gap-10 gap-5">
         <ul
-          class="flex min-[575]:gap-10 gap-4 sm:gap-20 sm:overflow-x-auto overflow-x-none sm:flex-nowrap flex-wrap justify-start">
+          class="flex min-[575]:gap-10 gap-4 xl:gap-12 2xl:gap-15 lg:overflow-x-auto overflow-x-none lg:flex-nowrap flex-wrap justify-start [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-yellow-400 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar]:overflow-hidden [&::-webkit-scrollbar-thumb]:bg-black [&::-webkit-scrollbar-thumb]:rounded-full">
           <li class="flex items-center gap-2 whitespace-nowrap">
             <div class="w-8 h-1 rounded-full bg-yellow-400"></div>
             Tunnustatud RIGA brändi maaletooja
@@ -604,11 +605,48 @@
   <script src="assets/js/swiper.js"></script>
   <script src="assets/js/font-awesome.js"></script>
   <script>
+    const header = document.querySelector(".header");
+    const navLinks = document.querySelectorAll(".header nav a");
+    const headerButton = document.querySelector(".header button");
+    const userMenu = document.querySelector("#user-menu-button .fa-angle-down");
+
+    window.addEventListener("scroll", function () {
+      if (window.scrollY < 200) {
+        header.classList.add("absolute");
+        header.classList.remove("sticky", "top-0", "shadow-lg", "bg-white");
+
+        navLinks.forEach((link) => {
+          link.classList.add("xl:text-white text-black");
+          link.classList.remove("text-black");
+        });
+
+        headerButton.classList.add("text-gray-900", "bg-white");
+        headerButton.classList.remove("text-white", "bg-black");
+
+        userMenu.classList.remove("text-black");
+        userMenu.classList.add("text-white");
+      }
+      else {
+        header.classList.add("sticky", "top-0", "shadow-lg", "bg-white");
+        header.classList.remove("absolute");
+        navLinks.forEach((link) => {
+          link.classList.add("text-black");
+          link.classList.remove("text-white");
+        });
+
+        headerButton.classList.remove("text-gray-900", "bg-white");
+        headerButton.classList.add("text-white", "bg-black");
+
+        userMenu.classList.add("text-black");
+        userMenu.classList.remove("text-white");
+      }
+    });
     $(document).ready(function () {
       $("#user-menu-button").click(function () {
         $("#user-menu").slideToggle("slow");
       });
     });
+
     $(document).ready(function () {
       $("#mobile-menu-button").click(function () {
         $("#mobile-menu").slideToggle("slow");
@@ -629,44 +667,6 @@
 
 
     document.addEventListener("DOMContentLoaded", function () {
-      const header = document.querySelector(".header");
-      const navLinks = document.querySelectorAll(".header nav a");
-      const headerButton = document.querySelector(".header button");
-      console.log(headerButton);
-
-      const userMenu = document.querySelector("#user-menu-button .fa-angle-down");
-
-      window.addEventListener("scroll", function () {
-        if (window.scrollY >= 200) {
-          header.classList.add("sticky", "top-0", "shadow-lg", "bg-white");
-          header.classList.remove("absolute");
-          navLinks.forEach((link) => {
-            link.classList.add("text-black");
-            link.classList.remove("text-white");
-          });
-
-          headerButton.classList.remove("text-gray-900", "bg-white");
-          headerButton.classList.add("text-white", "bg-black");
-
-          userMenu.classList.add("text-black");
-          userMenu.classList.remove("text-white");
-        }
-        else {
-          header.classList.remove("sticky", "top-0", "shadow-lg", "bg-white");
-          header.classList.add("absolute");
-          navLinks.forEach((link) => {
-            link.classList.add("xl:text-white text-black");
-            link.classList.remove("text-black");
-          });
-
-          headerButton.classList.add("text-gray-900", "bg-white");
-          headerButton.classList.remove("text-white", "bg-black");
-
-          userMenu.classList.remove("text-black");
-          userMenu.classList.add("text-white");
-        }
-      });
-
       const swiper = new Swiper(".reading-slider", {
         spaceBetween: 20,
         loop: true,
@@ -710,20 +710,24 @@
             activeSlide.style.opacity = "1";
           },
         },
-        
+
         breakpoints: {
           0: {
             slidesPerView: 1,
           },
+
           768: {
-            spaceBetween: 40,
             slidesPerView: 1.5,
+            spaceBetween: 40,
           },
 
           991: {
             slidesPerView: 1.8,
           },
-          1024: {
+          1099: {
+            slidesPerView: 2,
+          },
+          1199: {
             slidesPerView: 2.5,
           },
         },
@@ -758,7 +762,7 @@
           }
         });
       }
-      
+
       function updateCustomPagination(swiperInstance) {
         document.querySelectorAll(".custom-dot").forEach(dot => {
           dot.classList.remove("bg-yellow-400", "scale-110", "opacity-100");
